@@ -19,7 +19,9 @@ This project demonstrates the use of Nmap for network discovery, port scanning, 
 </p>
 
 ### Command
-$ nmap --version or nmap -v
+```bash
+nmap --version
+```
 
 ### Observation
 - Verified that nmap was installed successfully.
@@ -32,3 +34,7 @@ $ nmap --version or nmap -v
 ### What i learned
 - How to verify a successful Nmap installation.
 - How to check installed version from the command line.
+
+## Hosts Discovery
+
+![Hosts Discovery](screenshots/02-hosts_discovery.png)
