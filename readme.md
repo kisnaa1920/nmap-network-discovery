@@ -162,6 +162,30 @@ nmap -sS -Pn -sV 192.168.23.128
 - `-sV` is the step that turns a plain port list into something actually useful — it's what you'd check *after* finding open ports.
 - A lot of these versions (vsftpd 2.3.4, UnrealIRCd, old MySQL/PostgreSQL) are famous specifically *because* they have known, public exploits — seeing them helps connect scan output to real vulnerabilities.
 
+# Vulnerability Scan (NSE `vuln` scripts)
+![Vulnerability Scan](screenshots/05-vulnerability_scan.png)
+<p align=center>05-vulnerability_scan.png</p>
+## Command
+```bash
+nmap -sV -Pn --script vuln 192.168.23.128
+```
 
+## Parameters
+ 
+| Flag | Meaning |
+|------|---------|
+| `-sV` | Detects service name + version on each open port |
+| `-Pn` | Skips ping check, scans anyway |
+| `--script vuln` | Runs all NSE scripts in the "vuln" category — checks for known vulnerabilities |
+| `192.168.23.128` | Target IP (Metasploitable2 VM) |
+## Observation
+- Checks the exact service versions found earlier against known, public vulnerability databases — and lists any matching exploits/CVEs for each one.
+- `NSE stands` for the Nmap Scripting Engine
+
+## Why is this Important?
+-This command matters because it goes beyond just showing open ports — it checks if the services running on them have known, publicly exploitable vulnerabilities, helping identify which issues need to be fixed first.
+## What I Learned
+- `--script vuln` takes version detection one step further — instead of me manually looking up "is vsftpd 2.3.4 vulnerable?", Nmap cross-checks it automatically against vulnerability databases.
+- In a real environment, a finding like this would mean: patch/upgrade the service immediately, since public exploits are freely available for anyone to find.
 
 
