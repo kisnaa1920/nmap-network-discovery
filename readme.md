@@ -36,7 +36,7 @@ This project was carried out entirely within a private, isolated lab environment
   01-nmap_version.png
 </p>
 
-### Command
+## Command
 ```bash
 nmap --version
 ```
@@ -65,9 +65,6 @@ nmap --version
 nmap -sn -n 192.168.23.0/24
 ```
 
-## What it does
-Finds all live devices on the `192.168.23.0/24` network without scanning ports.
-
 ## Parameters
 
 | Flag | Meaning |
@@ -78,6 +75,7 @@ Finds all live devices on the `192.168.23.0/24` network without scanning ports.
 | `/24` | Scans the whole subnet (192.168.1.0–255), not just `.1` |
 
 ## Observation
+- Finds all live devices on the `192.168.23.0/24` network without scanning ports.
 - Output shows only **IP + MAC address** of live hosts (no ports/services/dns, since `-sn` & `-n` skips that).
 
 ## Why is this Important?
