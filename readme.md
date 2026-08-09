@@ -12,7 +12,7 @@ This project demonstrates the use of Nmap for network discovery, port scanning, 
 - Detect running services
 - Understand basic network enumeration
 
-## Nmap Installation Verification
+# Nmap Installation Verification
 ![Nmap Version](screenshots/01-nmap_version.png)
 <p align ='center'>
   01-nmap_version.png
@@ -23,19 +23,19 @@ This project demonstrates the use of Nmap for network discovery, port scanning, 
 nmap --version
 ```
 
-### Observation
+## Observation
 - Verified that nmap was installed successfully.
 - The installed version and supported libaries were displayed.
 - The tool is ready for network scanning tasks.
 
-### Why is this important?
+## Why is this important?
 - Verifying the installation ensure that Nmap is correctly configured before performing any scans.
 - It confirms that the required components are available.
-### What I Learned
+## What I Learned
 - How to verify a successful Nmap installation.
 - How to check installed version from the command line.
 
-## Hosts Discovery
+# Hosts Discovery
 
 ![Hosts Discovery](screenshots/02-hosts_discovery.png)
 <p align ="center">
@@ -82,11 +82,9 @@ Finds all live devices on the `192.168.23.0/24` network without scanning ports.
 
 ## Command
 ```bash
-nmap -sV -Pn 192.168.23.128
+nmap -sS -Pn 192.168.23.128
 ```
 
-## What it does
-- Checks which ports are open on the target machine, using a fast and quiet scan method. It skips the "ping check" step and scans directly, even if the host doesn't reply to ping.
 ## Parameters
 
 | Flag | Meaning |
@@ -128,8 +126,6 @@ Notable open ports:
 ```bash
 nmap -sS -Pn -sV 192.168.23.128
 ```
-## What it does
-- Finds open ports (like before), but also figures out the **exact service and version** running on each one — not just "ftp is open" but "which FTP software, which version."
 
 ## Parameters
  
@@ -165,6 +161,7 @@ nmap -sS -Pn -sV 192.168.23.128
 # Vulnerability Scan (NSE `vuln` scripts)
 ![Vulnerability Scan](screenshots/05-vulnerability_scan.png)
 <p align=center>05-vulnerability_scan.png</p>
+
 ## Command
 ```bash
 nmap -sV -Pn --script vuln 192.168.23.128
@@ -180,7 +177,7 @@ nmap -sV -Pn --script vuln 192.168.23.128
 | `192.168.23.128` | Target IP (Metasploitable2 VM) |
 ## Observation
 - Checks the exact service versions found earlier against known, public vulnerability databases — and lists any matching exploits/CVEs for each one.
-- `NSE stands` for the Nmap Scripting Engine
+- `NSE stands` for the Nmap Scripting Engine.
 
 ## Why is this Important?
 -This command matters because it goes beyond just showing open ports — it checks if the services running on them have known, publicly exploitable vulnerabilities, helping identify which issues need to be fixed first.
@@ -189,6 +186,40 @@ nmap -sV -Pn --script vuln 192.168.23.128
 - In a real environment, a finding like this would mean: patch/upgrade the service immediately, since public exploits are freely available for anyone to find.
 
 # Scan with Save Report
-![Scan with Save Report](screenshots/06-scan_with_save _report.png)
+![Scan with Save Report](screenshots/06-scan_with_save_report.png)
 <p align='center'>06-scan_with_save_report.png</p>
+
+## Command
+```bash
+nmap -sU -sT -Pn --top-ports 30 192.168.23.128 -oN output.txt
+```
+## Parameters
+ 
+| Flag | Meaning |
+|------|---------|
+| `-sU` | UDP scan — checks UDP ports (used by services like DNS, DHCP, NetBIOS) |
+| `-sT` | TCP Connect scan — checks TCP ports using a full handshake (doesn't need admin/raw-socket access like `-sS`) |
+| `-Pn` | Skips the ping check, scans anyway |
+| `--top-ports 30` | Scans the top 30 most common ports, for both protocols |
+| `192.168.23.128` | Target IP (Metasploitable2) |
+| `-oN output.txt` | Saves the full output to `output.txt` in normal (readable) format |
+
+## Observation
+- This command scanned both TCP and UDP protocols, but limited to the top 30 most common ports for each, and saved the full result to output.txt instead of just showing it in the terminal.
+
+## Why is this Important?
+- Scanning both TCP and UDP gives a complete picture of exposed services — a TCP-only scan would have missed UDP-based services like DNS and NetBIOS.
+- Saving output with -oN makes the scan a documented, shareable record instead of a one-time terminal output — a common practice in real security reporting.
+
+## What I Learned
+- TCP and UDP behave differently — UDP has no handshake, so results are often `open|filtered` instead of a clear open/closed.
+- Combining `-sU` and `-sT` roughly doubles scan time, since both checks run one after another.
+- `oN` output.txt saves the full result as a clean file instead of a scrolling terminal screenshot.
+
+# LAB SETUP
+- Hypervisor: VMware Workstation.
+- Attacker/Scanner Machine: Windows host (Nmap run directly from PowerShell).
+- Target Machine: `Metasploitable2` (intentionally vulnerable Linux VM).
+- Network Mode: Host-only — keeps the target isolated from the real network while still allowing the Windows host to scan it directly.
+- Target IP: `192.168.23.128`.
 
