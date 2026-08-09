@@ -234,10 +234,5 @@ nmap -sU -sT -Pn --top-ports 30 192.168.23.128 -oN output.txt
 - Combining `-sU` and `-sT` roughly doubles scan time, since both checks run one after another.
 - `oN` output.txt saves the full result as a clean file instead of a scrolling terminal screenshot.
 
-# LAB SETUP
-- Hypervisor: VMware Workstation.
-- Attacker/Scanner Machine: Windows host (Nmap run directly from PowerShell).
-- Target Machine: `Metasploitable2` (intentionally vulnerable Linux VM).
-- Network Mode: Host-only — keeps the target isolated from the real network while still allowing the Windows host to scan it directly.
-- Target IP: `192.168.23.128`.
+
 
