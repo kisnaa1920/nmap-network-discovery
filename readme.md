@@ -188,4 +188,7 @@ nmap -sV -Pn --script vuln 192.168.23.128
 - `--script vuln` takes version detection one step further — instead of me manually looking up "is vsftpd 2.3.4 vulnerable?", Nmap cross-checks it automatically against vulnerability databases.
 - In a real environment, a finding like this would mean: patch/upgrade the service immediately, since public exploits are freely available for anyone to find.
 
+# Scan with Save Report
+![Scan with Save Report](screenshots/06-scan_with_save _report.png)
+<p align='center'>06-scan_with_save_report.png</p>
 
