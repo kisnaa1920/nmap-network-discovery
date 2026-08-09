@@ -44,11 +44,11 @@ nmap --version
 
 ## Command
 ```bash
-nmap -sn -n 192.168.1.1/24
+nmap -sn -n 192.168.23.0/24
 ```
 
 ## What it does
-Finds all live devices on the `192.168.1.1/24` network without scanning ports.
+Finds all live devices on the `192.168.23.0/24` network without scanning ports.
 
 ## Parameters
 
@@ -56,11 +56,11 @@ Finds all live devices on the `192.168.1.1/24` network without scanning ports.
 |------|---------|
 | `-sn` | Only checks which hosts are up (no port scan) |
 | `-n` | Skips DNS lookup, makes scan faster |
-| `192.168.1.1`| Target IP of subnet mask |
+| `192.168.23.0`| Target IP of subnet mask |
 | `/24` | Scans the whole subnet (192.168.1.0–255), not just `.1` |
 
 ## Observation
-- Output shows only **IP + MAC address** of live hosts (no ports/services, since `-sn` skips that).
+- Output shows only **IP + MAC address** of live hosts (no ports/services/dns, since `-sn` & `-n` skips that).
 
 ## Why is this Important?
 - Host discovery is always the **first step** before any port/service scan — no point scanning ports on a dead IP.
