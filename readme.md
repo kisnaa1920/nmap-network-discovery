@@ -1,10 +1,28 @@
 # Nmap Network Discovery 
+## Contents
+- [Overview](#overview)
+- [Lab Setup](#lab-setup)
+- [Nmap Installation Verification](#nmap-installation-verification)
+- [Host Discovery](#hosts-discovery)
+- [TCP SYN Port Scan](#tcp-syn-port-scan)
+- [Service & Version Detection](#service--version-detection)
+- [Vulnerability Scan](#vulnerability-scan-nse-vuln-scripts)
+- [Scan with Save Report](#scan-with-save-report)
 ## Overview
 This project demonstrates the use of Nmap for network discovery, port scanning, and service enumeration in an authorized lab environment.
-## Lab Environment 
-- Operating System: Windows
-- Tool: Nmap
-- Environment Home Network
+## Lab Setup
+
+This project was carried out entirely within a private, isolated lab environment.
+
+| Component | Detail |
+|---|---|
+| Hypervisor | VMware Workstation |
+| Attacker/Scanner Machine | Windows host (Nmap run via PowerShell) |
+| Target Machine | Metasploitable2 (intentionally vulnerable Linux VM) |
+| Target IP | 192.168.23.128 |
+| Network Mode | Host-only (isolates the target VM from the real network while still allowing the Windows host to scan it) |
+
+> ⚠️ **Disclaimer:** All scans were performed against Metasploitable2, a virtual machine intentionally built with known vulnerabilities for cybersecurity training and practice. No real, external, or third-party systems were scanned. This project was conducted for educational purposes only, within an authorized, isolated environment.
 ## Objectives
 - Verify Nmap installation
 - Discover active hosts
