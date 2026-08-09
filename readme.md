@@ -120,4 +120,48 @@ Notable open ports:
 - `-sS` is fast and quiet because it doesn't finish the full connection — it just knocks and checks if the door is open.
 - `-Pn` helps when a host blocks ping — without it, Nmap might think the host is "down" and skip it completely.
 
+# Service & Version Detection 
+![Service & Version Detection](screenshots/04-service_&_version_detection.png)
+<p align="center">04-service_&_version_detection.png</p>
+
+## Commands
+```bash
+nmap -sS -Pn -sV 192.168.23.128
+```
+## What it does
+- Finds open ports (like before), but also figures out the **exact service and version** running on each one — not just "ftp is open" but "which FTP software, which version."
+
+## Parameters
+ 
+| Flag | Meaning |
+|------|---------|
+| `-sS` | SYN scan — checks which ports are open |
+| `-Pn` | Skips ping check, scans anyway |
+| `-sV` | Detects service name + version on each open port |
+| `192.168.23.128` | Target IP (Metasploitable2 VM) |
+
+## Observation
+23 open ports found, now with exact versions. A few stand out as **known-vulnerable, textbook-insecure versions**:
+ 
+| Port | Service | Version | Why it's notable |
+|------|---------|---------|-------------------|
+| 21 | ftp | vsftpd 2.3.4 | A famous backdoored version — widely used as a teaching example |
+| 23 | telnet | Linux telnetd | Sends everything (including passwords) in plain text |
+| 512–514 | exec/login/shell | (r-services) | Old, weakly authenticated remote access tools |
+| 1524 | bindshell | **"Metasploitable root shell"** | Nmap itself labels this — a shell left open on purpose |
+| 3306 | mysql | MySQL 5.0.51a | Old version, database exposed to the network |
+| 5432 | postgresql | PostgreSQL 8.3.0–8.3.7 | Old version |
+| 6667 | irc | UnrealIRCd | A version of this IRC server had a well-known backdoor |
+| 80 / 8180 | http | Apache 2.2.8 / Tomcat | Old web server versions |
+
+## Why is this Important?
+- Just knowing a port is "open" isn't enough — the **version** is what actually tells you if something is exploitable. Two machines can have the same open port but very different risk depending on the software version.
+
+
+## What I Learned
+- `-sV` is the step that turns a plain port list into something actually useful — it's what you'd check *after* finding open ports.
+- A lot of these versions (vsftpd 2.3.4, UnrealIRCd, old MySQL/PostgreSQL) are famous specifically *because* they have known, public exploits — seeing them helps connect scan output to real vulnerabilities.
+
+
+
 
